@@ -1,0 +1,13 @@
+tensorflow
+numpy
+pandas
+matplotlib
+seaborn
+PyYAML
+
+# Terminal.app
+
+## local package installation
+## this will treate and istaall "src" folder as package in local system
+## uses local setup.py file
+-e .
