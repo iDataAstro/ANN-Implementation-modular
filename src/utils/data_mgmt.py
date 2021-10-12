@@ -1,5 +1,5 @@
 import tensorflow as tf
-import logging
+
 
 def get_prepared_data(validation_datasize, logger):
     """Function will return MNIST data

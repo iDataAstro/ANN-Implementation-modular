@@ -4,13 +4,12 @@ import logging
 import logging.config
 import time
 
-import pandas as pd
-import matplotlib.pyplot as plt
 
 def read_config(config_path):
     with open(config_path) as config_file:
         content = yaml.safe_load(config_file)
     return content
+
 
 def get_logger(logs_dir, logger_name):
     # create logger with 'spam_application'
@@ -35,12 +34,6 @@ def get_logger(logs_dir, logger_name):
 
     return logger
 
-def save_history_plot(history, plot_dir):
-    pd.DataFrame(history.history).plot(figsize=(10,8))
-    plt.grid(True)
-    os.makedirs(plot_dir, exist_ok=True)
-    plot_file = os.path.join(plot_dir, "loss_accuracy.png")
-    plt.savefig(plot_file)
 
 def get_unique_name():
     return time.strftime('%Y_%m_%d_%H_%M_%S')

@@ -1,7 +1,9 @@
 import tensorflow as tf
+import pandas as pd
+import matplotlib.pyplot as plt
 
-import logging
 import os
+
 
 def get_prepared_model(no_classes, input_shape, loss, optimizer, metrics, logger):
     """Function creates ANN model and compile.
@@ -30,8 +32,17 @@ def get_prepared_model(no_classes, input_shape, loss, optimizer, metrics, logger
 
     return model_ann
 
+
 def save_model(model_dir, model, model_suffix, logger):
     os.makedirs(model_dir, exist_ok=True)
     model_file = os.path.join(model_dir, f"model_{model_suffix}.h5")
     model.save(model_file)
     logger.info(f"Saved model: {model_file}")
+
+
+def save_history_plot(history, plot_dir):
+    pd.DataFrame(history.history).plot(figsize=(10,8))
+    plt.grid(True)
+    os.makedirs(plot_dir, exist_ok=True)
+    plot_file = os.path.join(plot_dir, "loss_accuracy.png")
+    plt.savefig(plot_file)
