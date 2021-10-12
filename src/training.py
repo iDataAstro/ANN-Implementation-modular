@@ -2,12 +2,6 @@ from src.utils.common import read_config, get_logger, get_unique_name
 from src.utils.data_mgmt import get_prepared_data
 from src.utils.model import get_prepared_model, save_model, save_history_plot
 
-import tensorflow as tf
-import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
-import seaborn as sns
-
 import argparse
 import os
 
