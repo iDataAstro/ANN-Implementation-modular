@@ -6,12 +6,25 @@ import time
 
 
 def read_config(config_path):
+    """
+    Args:
+        config_path: Path to the config file
+    Returns:
+        content: Returns content of config file
+    """
     with open(config_path) as config_file:
         content = yaml.safe_load(config_file)
     return content
 
 
 def get_logger(logs_dir, logger_name):
+    """
+    Args:
+        logs_dir: Directory to save logs
+        logger_name: Logger name to create logger object
+    Returns:
+        logger: Returns logger object for logging
+    """
     # create logger with 'spam_application'
     logger = logging.getLogger(logger_name)
     logger.setLevel(logging.DEBUG)
@@ -36,5 +49,9 @@ def get_logger(logs_dir, logger_name):
 
 
 def get_unique_name():
+    """
+    Returns:
+        Returns unique name with current time stamp
+    """
     return time.strftime('%Y_%m_%d_%H_%M_%S')
     

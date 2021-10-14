@@ -1,12 +1,16 @@
 from src.utils.common import read_config, get_logger, get_unique_name
 from src.utils.data_mgmt import get_prepared_data
-from src.utils.model import get_prepared_model, save_model, save_history_plot
+from src.utils.model import get_prepared_model, save_model, save_history_plot, get_callbacks
 
 import argparse
-import os
 
 
 def training(config_path):
+    """
+    Function create, compile, train and save ANN model.
+    Args:
+        config_path: Path for config file.
+    """
     configs = read_config(config_path)
 
     logs_dir = configs["logs"]["logs_dir"]
@@ -22,27 +26,27 @@ def training(config_path):
     loss = configs["params"]["loss_function"]
     optimizer = configs["params"]["optimizer"]
     metrics = configs["params"]["metrics"]
+    checkpoint_dir = configs["artifacts"]["checkpoint_dir"]
+    tensorboard_logs = configs["logs"]["tensorboard_logs"]
     logger.info("Getting compiled ann model..")
     model_ann = get_prepared_model(no_classes, input_shape, loss, optimizer, metrics, logger)
 
+    callback_list = get_callbacks(checkpoint_dir, tensorboard_logs)
+
     EPOCHS = configs["params"]["epochs"]
     logger.info("Model training start..")
-    history = model_ann.fit(X_train, y_train, epochs=EPOCHS, validation_data=(X_valid, y_valid))
+    history = model_ann.fit(X_train, y_train, epochs=EPOCHS, validation_data=(X_valid, y_valid),
+                            callbacks=callback_list)
     logger.info("Model training ends..")
 
-    artifacts_dir = configs["artifacts"]["artifacts_dir"]
     plot_dir = configs["artifacts"]["plot_dir"]
-    plot_dir_path = os.path.join(artifacts_dir, plot_dir)
     logger.info("Plot Loss/Accuracy curves..")
-    save_history_plot(history, plot_dir_path)
+    save_history_plot(history, plot_dir)
 
     model_dir = configs["artifacts"]["model_dir"]
-    model_dir_path = os.path.join(artifacts_dir, model_dir)
     model_suffix = get_unique_name()
-    save_model(model_dir_path, model_ann, model_suffix, logger)
+    save_model(model_dir, model_ann, model_suffix, logger)
     logger.info("Model saved successfully..")
-
-    checkpoint_dir = configs["artifacts"]["checkpoint_dir"]
 
 
 if __name__ == '__main__':

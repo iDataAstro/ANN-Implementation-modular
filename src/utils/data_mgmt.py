@@ -3,6 +3,9 @@ import tensorflow as tf
 
 def get_prepared_data(validation_datasize, logger):
     """Function will return MNIST data
+    Args:
+        validation_datasize: validation datasize for split data
+        logger: logger object for logging
     Returns:
         (X_train, y_train), (X_valid, y_valid), (X_test, y_test)
     """

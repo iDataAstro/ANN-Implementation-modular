@@ -7,11 +7,15 @@ params:
   optimizer: SGD
   validation_datasize: 5000
 
+#bool_params:
+#  checkpoint: 1
+#  tensorboard: 1
+#  early_stopping: 1
+
 artifacts:
-  artifacts_dir: artifacts
-  model_dir: models
-  plot_dir: plots
-  checkpoint_dir: checkpoints
+  model_dir: artifacts/models
+  plot_dir: artifacts/plots
+  checkpoint_dir: artifacts/checkpoints
 
 logs:
   logs_dir: logs_dir
